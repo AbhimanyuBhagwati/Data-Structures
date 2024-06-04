@@ -133,15 +133,64 @@ class LinkList:
         Returns:
             CreateNode or None: The node at the specified index, or None if the index is out of range.
         """
-        """
-        if index < 0 or index >= self.length:
+        if self.head is None:
             return None
         temp = self.head
         for _ in range(index):
+            if temp.next is None:
+                return "Index out of range"
             temp = temp.next
+        print(temp.node)
         return temp
+
+    def set_value_at_index(self, index, value):
         """
-        pass
+        Sets the value of the node at the given index in the linked list.
+        :param index:
+        :param value:
+        :return:
+        """
+        temp = self.get_node_at_index(index)
+        temp.node = value
+
+    def insert_node_at_index(self, index, value):
+        """
+        Inserts a new node with the given value at the specified index in the linked list.
+        :param index:
+        :param value:
+        :return:
+        """
+        if index <0 or index >= self.length:
+            return "Index out of range"
+        if index == 0:
+            self.pre_append_node(value)
+        elif index == self.length:
+            self.append_node(value)
+        else:
+            new_node = CreateNode(value)
+            temp = self.head
+            for _ in range(index - 1):
+                temp = temp.next
+            new_node.next = temp.next
+            temp.next = new_node
+            self.length += 1
+
+    def remove_node_at_index(self, index):
+        if index < 0 or index >= self.length:
+            return "Index out of range"
+        elif index ==0:
+            self.pop_first_node()
+        elif index == self.length:
+            self.pop_node()
+        else:
+            pre = self.get_node_at_index(index-1)
+            temp = pre.next
+            pre.next = temp.next
+            temp.next = None
+            self.length -=1
+
+
+
 
 
 if __name__ == "__main__":
@@ -157,4 +206,18 @@ if __name__ == "__main__":
     linklist_obj.print_linklist()
     print("________POP FIRST________")
     linklist_obj.pop_first_node()
+    linklist_obj.print_linklist()
+    print("________GET NODE AT INDEX________")
+    linklist_obj.get_node_at_index(1)
+    print("________SET VALUE AT INDEX________")
+    linklist_obj.print_linklist()
+    linklist_obj.set_value_at_index(1, 5)
+    linklist_obj.print_linklist()
+    print("________INSERT NODE AT INDEX________")
+    linklist_obj.insert_node_at_index(1, 2)
+    linklist_obj.insert_node_at_index(2, 3)
+    linklist_obj.insert_node_at_index(3, 4)
+    linklist_obj.print_linklist()
+    print("________REMOVE NODE AT INDEX________")
+    linklist_obj.remove_node_at_index(2)
     linklist_obj.print_linklist()
