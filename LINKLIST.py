@@ -189,7 +189,17 @@ class LinkList:
             temp.next = None
             self.length -=1
 
-
+    def reverse_linklist(self):
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+        before_node = None
+        for _ in range(self.length):
+            after_node = temp.next
+            temp.next = before_node
+            before_node = temp
+            temp = after_node
+        return self.print_linklist()
 
 
 
@@ -221,3 +231,5 @@ if __name__ == "__main__":
     print("________REMOVE NODE AT INDEX________")
     linklist_obj.remove_node_at_index(2)
     linklist_obj.print_linklist()
+    print("________REVERSE LINKLIST________")
+    linklist_obj.reverse_linklist()
